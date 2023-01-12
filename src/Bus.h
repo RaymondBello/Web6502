@@ -30,17 +30,4 @@ public:
 
 };
 
-TEST_CASE("Bus.h Test")
-{
-    Bus b;
-
-    SUBCASE("ensure ram is reset on start"){
-        CHECK(b.ram[MIN_RAM_ADDR]       == 0x00);
-        CHECK(b.ram[(MAX_RAM_ADDR+1)/2] == 0x01);
-        CHECK(b.ram[MAX_RAM_ADDR]       == 0x00);
-    }
-
-
-
-}
 

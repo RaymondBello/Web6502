@@ -1,4 +1,3 @@
-#include <stdio.h>
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
@@ -13,10 +12,17 @@
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+
 #include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
 
 #include "config.h"
+#include "Bus.h"
+#include "R6502.h"
 
+Bus nes;
+std::map<uint16_t, std::string> mapAsm;
 
 GLFWwindow* g_window;
 ImVec4 clear_color = ImVec4(1.0f, 1.0f, 0.60f, 1.00f);
@@ -39,6 +45,14 @@ static int scaling_algoritm_current_index = 0; // Here we store our selection da
 //     pixel_data[y * 100 + x * 3 + 2] = 0x00;
 //   }
 // }
+
+std::string hex(uint32_t n, uint8_t d)
+{
+    std::string s(d, '0');
+    for (int i = d - 1; i >= 0; i--, n >>= 4)
+        s[i] = "0123456789ABCDEF"[n & 0xF];
+    return s;
+};
 
 EM_JS(int, canvas_get_width, (), {
   return Module.canvas.width;
@@ -97,7 +111,11 @@ void show_menubar()
 
     ImGui::Separator();
 
-    ImGui::Text("Stats: %.1f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+    if (ImGui::Button("Clock CPU"))
+    {
+        nes.cpu.clock();
+        ImGui::LogText("Clocked CPU");
+    }
 
     ImGui::EndMainMenuBar();
   }
@@ -147,7 +165,7 @@ void loop()
         ImVec2 uv_max = ImVec2(1.0f, 1.0f);                 // Lower-right
         ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);   // No tint
         ImVec4 border_col = ImVec4(1.0f, 1.0f, 1.0f, 0.5f); // 50% opaque white
-        ImGui::Image(my_tex_id, ImVec2(my_tex_w, 500.0f), uv_min, uv_max, tint_col, border_col);
+        ImGui::Image(my_tex_id, ImVec2(my_tex_w, my_tex_h), uv_min, uv_max, tint_col, border_col);
         if (ImGui::IsItemHovered())
         {
             ImGui::BeginTooltip();

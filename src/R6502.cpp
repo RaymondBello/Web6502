@@ -124,18 +124,7 @@ void R6502::clock()
 
         SetFlag(U, 1);
 
-    #ifdef LOG_MODE
-        if (logfile == nullptr)
-            logfile = fopen("R6502.log", "wt");
-        if (logfile != nullptr)
-        {
-            fprintf(logfile, "%10d:%02d PC:%04X %s A:%02X X:%02X Y:%02X %s%s%s%s%s%s%s%s STKP:%02X\n",
-                    clock_count, 0, log_pc, "XXX", a, x, y,
-                    GetFlag(N) ? "N" : ".", GetFlag(V) ? "V" : ".", GetFlag(U) ? "U" : ".",
-                    GetFlag(B) ? "B" : ".", GetFlag(D) ? "D" : ".", GetFlag(I) ? "I" : ".",
-                    GetFlag(Z) ? "Z" : ".", GetFlag(C) ? "C" : ".", stkp);
-        }
-#endif
+
     }
 
     // Increment global clock count

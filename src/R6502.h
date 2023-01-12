@@ -158,17 +158,9 @@ private:
     };
 
     std::vector<INSTRUCTION> lookup;
-
-#ifdef LOG_MODE
-private:
-    FILE *logfile = nullptr;
-#endif
+    // INSTRUCTION lookup[200];
 };
 
 
 
-TEST_CASE("R6502.h tests")
-{
-    CHECK(1 == true);
-}
 
