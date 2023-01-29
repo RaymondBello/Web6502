@@ -158,7 +158,6 @@ private:
     };
 
     std::vector<INSTRUCTION> lookup;
-    // INSTRUCTION lookup[200];
 };
 
 

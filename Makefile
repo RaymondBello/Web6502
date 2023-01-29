@@ -7,7 +7,7 @@ SOURCES = main.cpp
 SOURCES += $(IMGUI_DIR)/backends/imgui_impl_glfw.cpp $(IMGUI_DIR)/backends/imgui_impl_opengl3.cpp
 SOURCES += $(IMGUI_DIR)/imgui.cpp $(IMGUI_DIR)/imgui_draw.cpp $(IMGUI_DIR)/imgui_demo.cpp $(IMGUI_DIR)/imgui_widgets.cpp $(IMGUI_DIR)/imgui_tables.cpp
 
-SOURCES += $(R6502_DIR)/Bus.cpp $(R6502_DIR)/R6502.cpp
+SOURCES += $(R6502_DIR)/Bus.cpp $(R6502_DIR)/R6502.cpp $(R6502_DIR)/2DEngine.cpp
 
 
 LIBS = -lGL
